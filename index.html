@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project1</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="src/main.js" defer></script>
+</head>
+<body>
+    <main class="layout">
+        <section class="canvas-section">
+            <canvas id="canvas" width="800" height="600" />
+        </section>
+        
+        <aside class="control-panel">
+            <section class="coordinate-section">
+                <h2>점의 좌표</h2>
+                <div class="coordinate-box">
+                    <ul class="coordinate-list">
+                        <li id="left-top">
+                            <span>1. left, top: </span>
+                        </li>
+                        <li id="right-top">
+                            <span>2. right, top: </span>
+                        </li>
+                        <li id="right-bottom">
+                            <span>3. right, bottom: </span>
+                        </li>
+                        <li id="left-bottom">
+                            <span>4. left, bottom: </span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+    
+            <section class="control-section">
+                <h2>이동</h2>
+                <div class="input-box">
+                    <div class="input-group">
+                        <label for="moveX">x:</label>
+                        <input type="text" id="moveX" value="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="moveY">y:</label>
+                        <input type="text" id="moveY" value="0">
+                    </div>
+                </div>
+            </section>
+    
+            <section class="control-section">
+                <h2>회전</h2>
+                <div class="input-box">
+                    <div class="input-group">
+                        <label for="angle">각도:</label>
+                        <input type="number" id="angle" value="0">
+                    </div>
+                </div>
+            </section>
+    
+            <section class="control-section">
+                <h2>원점 변경</h2>
+                <div class="input-box">
+                    <div class="input-group">
+                        <label for="pivotX">x:</label>
+                        <input type="number" id="pivotX" value="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="pivotY">y:</label>
+                        <input type="number" id="pivotY" value="0">
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </main>
+</body>
+</html> 
