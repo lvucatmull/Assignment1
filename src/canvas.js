@@ -9,18 +9,19 @@ const state = {
     angle: 0,
     pivotX: 0,
     pivotY: 0 + RECT_SIZE,
-    matrix: [1, 0, 0, 1, 0, 0],
+    transform: [1, 0, 0, 1, 0, 0],
     points: []
 };
 
-const drawRect = () => {
+const drawScene = (isPivot = false) => {
     const canvas = document.getElementById('canvas');
     if (!canvas.getContext) return;
     
     const ctx = canvas.getContext('2d');
-    const [scaleX, skewY, skewX, scaleY, offsetX, offsetY] = state.matrix;
+    const [scaleX, skewY, skewX, scaleY, offsetX, offsetY] = state.transform;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     ctx.resetTransform();
     ctx.setTransform(scaleX, skewY, skewX, scaleY, offsetX, offsetY);
     ctx.beginPath();
@@ -33,20 +34,24 @@ const drawRect = () => {
         transform.transformPoint(new DOMPoint(state.originX + RECT_SIZE, state.originY + RECT_SIZE)),
         transform.transformPoint(new DOMPoint(state.originX, state.originY + RECT_SIZE))
     ];
+    console.log("%c saved points", "color: magenta", points);
     updateCoordinates(points);
-
-    ctx.fillStyle = 'white';
+    
+    ctx.fillStyle = 'lightgray';
     ctx.strokeStyle = 'black';
     ctx.stroke();
     ctx.fill();
     ctx.closePath();
 
+    //Pivot
     ctx.resetTransform();
     ctx.beginPath();
     ctx.arc(state.pivotX + state.moveX, state.pivotY + state.moveY, 3, 0, Math.PI * 2);
     ctx.fillStyle = 'red';
     ctx.fill();
     ctx.closePath();
+
+    ctx.resetTransform();
 };
 
 const updateTransform = () => {
@@ -64,7 +69,7 @@ const updateTransform = () => {
     const translateX = state.moveX + pivotX * (1 - cos) + pivotY * sin;
     const translateY = state.moveY + pivotY * (1 - cos) - pivotX * sin;
 
-    state.matrix = [
+    state.transform = [
         scaleX,
         skewX,
         skewY,
@@ -73,7 +78,7 @@ const updateTransform = () => {
         translateY
     ];
 
-    console.log("%c updateTransform", "color: darkblue", state.matrix);
+    console.log("%c updateTransform", "color: cyan", state.transform);
 };
 
 const setupListeners = () => {
@@ -89,10 +94,13 @@ const setupListeners = () => {
         document.getElementById(id)?.addEventListener('input', handleDebounce((e) => {
             console.log(`${id} : ${e.target.value}`);
             handler(e);
-            updateTransform();
-            drawRect();
+            if(id !== 'pivotX' && id !== 'pivotY') {
+                console.log("pivot is not updated");
+                updateTransform();
+            }
+            drawScene();
         }), 16);
     });
 };
 
-export { drawRect, setupListeners };
+export { drawScene, setupListeners };
