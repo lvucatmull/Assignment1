@@ -9,11 +9,17 @@ export const handleDebounce = (callback, limit) => {
 };
 
 export const validateInput = (e) => {
-  const prevValue = e.target.value;
-  const sanitizedValue = e.target.value.match(/^-?\d*$/);
-  
-  // 유효하지 않은 입력인 경우 이전 값으로 복원
-  e.target.value = sanitizedValue ? sanitizedValue[0] : prevValue;
+  const value = e.target.value;
+  const sanitizedValue = value.match(/^-?\d*$/);
+
+  if (!sanitizedValue) {
+      e.target.value = value.slice(0, -1);
+  }
+
+  if (value.indexOf('-') > 0 || (value.match(/-/g) || []).length > 1) {
+      e.target.value = value.replace(/-/g, '');
+  }
+
   return parseInt(e.target.value) || 0;
 };
 
