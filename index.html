@@ -10,7 +10,7 @@
 <body>
     <main class="layout">
         <section class="canvas-section">
-            <canvas id="canvas" width="800" height="600" />
+            <canvas id="canvas"></canvas>
         </section>
         
         <aside class="control-panel">
@@ -39,11 +39,11 @@
                 <div class="input-box">
                     <div class="input-group">
                         <label for="moveX">x:</label>
-                        <input type="text" id="moveX" value="0">
+                        <input type="number" step="1" id="moveX" value="0">
                     </div>
                     <div class="input-group">
                         <label for="moveY">y:</label>
-                        <input type="text" id="moveY" value="0">
+                        <input type="number" step="1" id="moveY" value="0">
                     </div>
                 </div>
             </section>
@@ -53,7 +53,7 @@
                 <div class="input-box">
                     <div class="input-group">
                         <label for="angle">각도:</label>
-                        <input type="number" id="angle" value="0">
+                        <input type="number" step="1" id="angle" value="0">
                     </div>
                 </div>
             </section>
@@ -63,11 +63,11 @@
                 <div class="input-box">
                     <div class="input-group">
                         <label for="pivotX">x:</label>
-                        <input type="number" id="pivotX" value="0">
+                        <input type="number" step="1" id="pivotX" value="0">
                     </div>
                     <div class="input-group">
                         <label for="pivotY">y:</label>
-                        <input type="number" id="pivotY" value="0">
+                        <input type="number" step="1" id="pivotY" value="0">
                     </div>
                 </div>
             </section>

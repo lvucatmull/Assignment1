@@ -9,9 +9,12 @@ export const handleDebounce = (callback, limit) => {
 };
 
 export const validateInput = (e) => {
-    const sanitizedValue = e.target.value.match(/^-?\d*$/);
-    e.target.value = sanitizedValue ? sanitizedValue[0] : '';
-    return parseInt(e.target.value) || 0;
+  const prevValue = e.target.value;
+  const sanitizedValue = e.target.value.match(/^-?\d*$/);
+  
+  // 유효하지 않은 입력인 경우 이전 값으로 복원
+  e.target.value = sanitizedValue ? sanitizedValue[0] : prevValue;
+  return parseInt(e.target.value) || 0;
 };
 
 export const degreeToRadian = (degree) => {

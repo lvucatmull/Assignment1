@@ -1,4 +1,4 @@
-import { RECT_SIZE } from "./constant.js";
+import { CANVAS_PADDING, RECT_SIZE } from "./constant.js";
 import updateCoordinates from "./controller.js";
 import { degreeToRadian, handleDebounce, validateInput } from "./util.js";
 const state = {
@@ -9,13 +9,17 @@ const state = {
     angle: 0,
     pivotX: 0,
     pivotY: 0 + RECT_SIZE,
-    transform: [1, 0, 0, 1, 0, 0],
+    transform: [1, 0, 0, 1, CANVAS_PADDING, CANVAS_PADDING],
     points: []
 };
 
 const drawScene = (isPivot = false) => {
     const canvas = document.getElementById('canvas');
     if (!canvas.getContext) return;
+    
+    const container = canvas.parentElement;
+    canvas.width = container.offsetWidth;
+    canvas.height = container.offsetHeight;
     
     const ctx = canvas.getContext('2d');
     const [scaleX, skewY, skewX, scaleY, offsetX, offsetY] = state.transform;
@@ -45,8 +49,9 @@ const drawScene = (isPivot = false) => {
 
     //Pivot
     ctx.resetTransform();
+    ctx.translate(state.moveX, state.moveY);
     ctx.beginPath();
-    ctx.arc(state.pivotX + state.moveX, state.pivotY + state.moveY, 3, 0, Math.PI * 2);
+    ctx.arc(state.pivotX + CANVAS_PADDING, state.pivotY + CANVAS_PADDING, 3, 0, Math.PI * 2);
     ctx.fillStyle = 'red';
     ctx.fill();
     ctx.closePath();
@@ -66,8 +71,8 @@ const updateTransform = () => {
     const skewX = sin;
     const skewY = -sin;
     const scaleY = cos;
-    const translateX = state.moveX + pivotX * (1 - cos) + pivotY * sin;
-    const translateY = state.moveY + pivotY * (1 - cos) - pivotX * sin;
+    const translateX = CANVAS_PADDING + state.moveX + pivotX * (1 - cos) + pivotY * sin;
+    const translateY = CANVAS_PADDING + state.moveY + pivotY * (1 - cos) - pivotX * sin;
 
     state.transform = [
         scaleX,
@@ -102,5 +107,9 @@ const setupListeners = () => {
         }), 16);
     });
 };
+
+window.addEventListener('resize', () => {
+    drawScene();
+});
 
 export { drawScene, setupListeners };
